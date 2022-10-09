@@ -1,6 +1,7 @@
 <div class="container">
     <div class="row m-4">
         {{#each result}}
+    
         <div class="card" style="width: 18rem;">
             <div class="card-header">
                  {{titulo}}
@@ -11,8 +12,19 @@
                 <li class="list-group-item">{{ nivel }}</li>
                 <li class="list-group-item">{{ fecha }}</li>
                 <li class="list-group-item">{{ _id }}</li>
+                           
             </ul>
+            <div class="btn-group">
+                <a href="/tareas/{{ _id }}" class="btn btn-primary" >Editar </a>
+                <a href="/eliminar/{{ _id }}" class="btn btn-danger">Eliminar</a>
+                
+            </div>
+                         
         </div>
+        
         {{/each}}
+       
     </div>
 </div>
+
+ {{!--   <form action="/addTareas" method="post"></form> --}}

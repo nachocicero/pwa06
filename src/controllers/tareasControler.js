@@ -44,7 +44,8 @@ export const addTareas = (req, res) => {
                     console.log('error en la conexion');
                 }else{
                     console.log('Dato guardado correctamente' + JSON.stringify(req.body));
-                    res.json(result);
+                   // res.json(result);
+                   res.render('respuesta');
                 }
             })
         }
@@ -67,8 +68,7 @@ export const eliminarTarea = (req, res) => {
                     if(error){
                         console.log('error en la conexion');
                     }else{
-                        console.log('Documento eliminado');
-                        res.json(result);
+                        res.render('eliminado');
                     }
                 })
             }
@@ -93,8 +93,8 @@ export const eliminarTarea = (req, res) => {
                 if(error){
                     console.log('error en la conexion');
                 }else{
-                    console.log('Documento eliminado');
-                    res.json(result);
+                    res.render('editarTarea', {result});
+                    //res.json(result);
                 }
             })
         }
@@ -102,7 +102,7 @@ export const eliminarTarea = (req, res) => {
     
 }
 
-export const getTareaByID = (req, res) => {
+/* export const getTareaByID = (req, res) => {
     mongoCliente.connect(process.env.MONGOLOCAL, (error, db) =>{
         const database = db.db('pwatt');
         if (error) {
@@ -124,33 +124,36 @@ export const getTareaByID = (req, res) => {
             })
         }
     });
-}
+} */
 
 export const actualizar = (req, res) =>{
 
-    mongoCliente.connect(process.env.MONGOLOCAL, (error, db) =>{
-        const database = db.db('pwatt');
-        if (error) {
-            console.log(`No estamos conectados a la Database`);
-        }else{
-            console.log(`Conexion correcta a la Database`);
+    MongoClient.connect(process.env.MONGOLOCAL, (error, db)=>{
+        const database =db.db(process.env.DATABASE)
 
-            let ObjectId = mongodb.ObjectId;
-            let id = req.params.id;
+        if(error){
+            console.log('error en la conexion');
+        }else{
+
+          
+            const ObjectId = mongodb.ObjectId
+            const id = req.params.id
 
             console.log(ObjectId(id));
             
             const { titulo, autor, descripcion, nivel} = req.body;
+            let dia = new Date();
+            let fechaString = dia.toDateString();
 
-            database.collection('tareas').findOne({_id: ObjectId(id)}, {$set: {titulo, autor, descripcion, nivel}} ,(error, result) => {
-                error? console.log(error.message) :
-                database.collection('tareas').replaceOne({_id: ObjectId(id)},{titulo, autor, descripcion, nivel, fecha: fechaData}, )
-                //console.log(req.body)
-                    res.redirect('/')
-                })
-        }
-    });
-    
+          /*   database.collection('tareas').findOne({_id: ObjectId(id)}, {$set: {titulo, autor, descripcion, nivel}} ,(error, result) => {
+                error? console.log(error.message) : */
+                database.collection('tareas').replaceOne({_id: ObjectId(id)}, {titulo, autor, descripcion, nivel, fecha:fechaString}, )
+                console.log(req.body)
+                    res.redirect('/tareas')
+                }
+        });
+
 }
+
  
 

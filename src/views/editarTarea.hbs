@@ -9,7 +9,7 @@
 
 <div class="container">
     <div class="">
-    <form action="/editarTarea/{{ result._id }}?_method=PUT " method="put" class="row g-3 needs-validation m-4">
+    <form action="/actualizar/{{ result._id }}" method="post" class="row g-3 needs-validation m-4">
         <div class="col-md-4">
         <label for="titulo" class="form-label">Título</label>
         <input
@@ -17,7 +17,7 @@
             class="form-control"
             id="titulo"
             name="titulo"
-            value=""
+            value= "{{ result.titulo }}"
             required
         />
         <div class="valid-feedback">
@@ -31,7 +31,7 @@
             class="form-control"
             id="autor"
             name="autor"
-            value=""
+            value="{{ result.autor }}"
             required
         />
         <div class="valid-feedback">
@@ -46,20 +46,15 @@
             id="descripcion"
             name="descripcion"
             required
-        />
-        </textarea>
+        />{{ result.descripcion }}</textarea>
         <div class="invalid-feedback">
             Please provide a valid city.
         </div>
         </div>
         <div class="col-md-3">
         <label for="nivel" class="form-label">Nivel</label>
-        <select 
-            class="form-select"     
-            id="nivel" 
-            name="nivel" required
-            >
-            <option selected disabled value="">Seleccionar...</option>
+        <select class="form-select" id="nivel" name="nivel" required>
+            <option selected disabled value="{{ result.nivel }}">"{{ result.nivel }}"</option>
             <option>No importante</option>
             <option>Importancia Media</option>
             <option>Urgente</option>
